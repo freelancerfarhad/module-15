@@ -1,8 +1,11 @@
 <?php
-
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\DemoController;
-use Illuminate\Support\Facades\Redirect;
+use App\Http\Controllers\PostController;
+use App\Http\Controllers\ContactController;
+use App\Http\Controllers\ProductController;
+use App\Http\Controllers\AssignmentControllers;
+
+
 
 /*
 |--------------------------------------------------------------------------
@@ -15,39 +18,39 @@ use Illuminate\Support\Facades\Redirect;
 |
 */
 
-/**
- * Task 1: Request Validation route
- */
-Route::post( '/register', [DemoController::class, 'register'] );
 
-/**
- * Task 2: Request Redirect
- */
-Route::get('/home', function () {
-    return Redirect::to('/dashboard', 302);
+// task-1 form validation
+    Route::post('/registration',[AssignmentControllers::class,'FormValidation']);
+
+
+// task-2 Request Redirect
+    Route::get('/home',function(){
+        return redirect('/dashboard',302);
+    });
+    Route::get('/dashboard',function(){
+        return "Welcome to Dashboard";
+    });
+
+// Task 3: Global Middleware LoginInfo.php
+    Route::get('/checkLog', [AssignmentControllers::class, 'checkLog']);
+// Task 4: Route Middleware
+    Route::middleware(['AuthMiddleware'])->group(function () {
+        Route::get('/profile/{password}', [AssignmentControllers::class, 'profile']);
+        Route::get('/settings/{password}', [AssignmentControllers::class, 'settings']);
+    });
+
+// Task 5: Controller
+Route::resource('/products',ProductController::class);
+
+
+// Task 6: Single Action Controller
+Route::post('/contact', ContactController::class);
+
+//Task 7: Resource Controller
+Route::resource('/products',PostController::class);
+
+
+// Task 8: Blade Template Engine
+Route::get('/', function () {
+    return 'welcome';
 });
- /**
- * Task 3: Global Middleware
- */
-
-  /**
- * Task 4: Route Middleware
- */
-
-  /**
- * Task 5: Controller
- */
-
- /**
- * Task 6: Single Action Controller
- */
-
-  /**
- * Task 7: Resource Controller
- */
-
-  /**
- * Task 8: Blade Template Engine
- */
-
-

@@ -6,7 +6,7 @@ use Closure;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
 
-class DemoMiddleware
+class AuthMiddleware
 {
     /**
      * Handle an incoming request.
@@ -15,14 +15,13 @@ class DemoMiddleware
      */
     public function handle(Request $request, Closure $next): Response
     {
-        $key=$request->key;
-        if($key=="Farhadxyz"){
+        // return $next($request);
+        $password = $request->password;
+        if ($password == '12345') {
             return $next($request);
+        } else {
+            
+            return response()->json('unauthorized', 401);
         }
-        else{
-            return Response()->json("unauthorize",404);
-            // return redirect("/Demomid1");
-        }
-      
     }
 }
